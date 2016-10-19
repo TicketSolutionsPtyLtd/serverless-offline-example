@@ -1,0 +1,14 @@
+version: '2'
+
+services:
+  dynamo:
+    image: tray/dynamodb-local
+    ports:
+      - "8000:8000"
+    command: -port 8000 -inMemory -sharedDb
+    networks:
+      - frontend
+
+networks:
+  frontend:
+    driver: bridge

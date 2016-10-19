@@ -1,0 +1,45 @@
+{
+  "name": "serverless-offline-example",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "offline-start": "sls offline start --port 4000",
+    "deploy": "sls deploy",
+    "build": "sls webpack",
+    "start": "npm run start-the-world && npm run reset-the-world && npm run offline-start",
+    "start-the-world": "docker-compose up -d",
+    "reset-the-world": "docker-compose restart && babel-node reset-the-world.js",
+    "stop-the-world": "docker-compose down",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Gert Jansen van Rensburg <gertjvr@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "amazon-cognito-identity-js": "^1.6.0",
+    "aws-sdk": "^2.6.9",
+    "bluebird": "^3.4.6",
+    "dotenv": "^2.0.0",
+    "jsonwebtoken": "^7.1.9",
+    "jwk-to-pem": "^1.2.5",
+    "request": "^2.75.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.16.0",
+    "babel-eslint": "^7.0.0",
+    "babel-loader": "^6.2.5",
+    "babel-plugin-transform-class-properties": "^6.16.0",
+    "babel-plugin-transform-object-rest-spread": "^6.16.0",
+    "babel-plugin-transform-runtime": "^6.15.0",
+    "babel-preset-latest": "^6.16.0",
+    "eslint": "^3.7.1",
+    "eslint-loader": "^1.5.0",
+    "eslint-plugin-import": "^2.0.0",
+    "json-loader": "^0.5.4",
+    "serverless": "^1.0.2",
+    "serverless-offline": "git+https://github.com/TicketSolutionsPtyLtd/serverless-offline.git/#ticketsolutions_master",
+    "serverless-webpack": "git+https://github.com/TicketSolutionsPtyLtd/serverless-webpack.git/#ticketsolutions_master",
+    "source-map-support": "^0.4.3",
+    "webpack": "^1.13.2"
+  }
+}

@@ -1,0 +1,14 @@
+Resources:
+    Type: AWS::DynamoDB::Table
+    DeletionPolicy: Retain
+    Properties:
+      TableName: todos
+      AttributeDefinitions:
+      - AttributeName: todoId
+        AttributeType: S
+      KeySchema:
+      - AttributeName: todoId
+        KeyType: HASH
+      ProvisionedThroughput:
+        ReadCapacityUnits: 5
+        WriteCapacityUnits: 5
