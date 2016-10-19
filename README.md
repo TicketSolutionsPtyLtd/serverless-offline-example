@@ -1,4 +1,5 @@
 # serverless-offline-example
+Serverless framework with offline, webpack plugins and custom cognito user pool auth
 
 ## Webpack bundler
  - `npm run build`
