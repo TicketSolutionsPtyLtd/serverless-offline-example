@@ -1,5 +1,5 @@
 # serverless-offline-example
-Serverless framework with offline, webpack plugins and custom cognito user pool auth
+Serverless framework with [offline](https://github.com/dherault/serverless-offline), [webpack](https://github.com/elastic-coders/serverless-webpack) plugins and custom cognito user pool auth
 
 ## Webpack bundler
  - `npm run build`
