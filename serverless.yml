@@ -1,0 +1,119 @@
+service: serverless-offline-example
+
+provider:
+  name: aws
+  runtime: nodejs4.3
+  stage: dev
+  region: ap-southeast-2
+  credentials: ${file(credentials.yml):credentials}
+  memorySize: 128
+  timeout: 30
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - "dynamodb:*"
+      Resource:
+        - "arn:aws:dynamodb:ap-southeast-2:*"
+
+plugins:
+  - serverless-offline
+  - serverless-webpack
+
+package:
+  individually: true
+  exclude:
+    - "*.json"
+    - "*.map"
+
+custom:
+  authorizer:
+    name: authorizer
+    type: "TOKEN"
+    identitySource: method.request.header.Authorization
+  webpack: config/webpack.config.js
+
+functions:
+  authorizer:
+    handler: authorizer.handler
+    package:
+          exclude:
+            - "!authorizer.*"
+
+  createEvent:
+    handler: createTodo.handler
+    package:
+      exclude:
+        - "!createTodo.*"
+    events:
+      - http:
+          method: POST
+          path: todos
+          cors: true
+          authorizer: ${self:custom.authorizer}
+
+  updateEvent:
+    handler: updateTodo.handler
+    package:
+      exclude:
+        - "!updateTodo.*"
+    events:
+      - http:
+          method: PUT
+          path: todos
+          cors: true
+          authorizer: ${self:custom.authorizer}
+
+  getEvents:
+    handler: getTodos.handler
+    package:
+      exclude:
+        - "!getTodos.*"
+    events:
+      - http:
+          method: GET
+          path: todos
+          cors: true
+          authorizer: ${self:custom.authorizer}
+
+  getEvent:
+    handler: getTodo.handler
+    package:
+      exclude:
+        - "!getTodo.*"
+    events:
+      - http:
+          method: GET
+          path: todos/{todoId}
+          cors: true
+          authorizer: ${self:custom.authorizer}
+
+  deleteEvent:
+    handler: removeTodo.handler
+    package:
+      exclude:
+        - "!removeTodo.*"
+    events:
+      - http:
+          method: DELETE
+          path: todos/{todoId}
+          cors: true
+          authorizer: ${self:custom.authorizer}
+
+resources:
+  Resources:
+    Events: ${file(resources/tables.yml):Resources}
+    Website:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: ${self:service}-${self:provider.stage}-website
+        AccessControl: PublicRead
+        WebsiteConfiguration:
+          ErrorDocument: index.html
+          IndexDocument: index.html
+  Outputs:
+    WebsiteEndpoint:
+        Value:
+          Fn::GetAtt:
+            - "Website"
+            - "WebsiteURL"
+        Description: "Endpoint for website hosted on S3"

@@ -11,6 +11,7 @@
     "start-the-world": "docker-compose up -d",
     "reset-the-world": "docker-compose restart && babel-node reset-the-world.js",
     "stop-the-world": "docker-compose down",
+    "pid": "tasklist /FI \"IMAGENAME eq node.exe\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Gert Jansen van Rensburg <gertjvr@gmail.com>",
