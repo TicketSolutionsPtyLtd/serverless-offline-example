@@ -3,6 +3,7 @@ const path = require('path')
 const webpack = require('webpack')
 const paths = require('./paths')
 const settings = require('./settings')
+const ExtendedDefineWebpackPlugin = require('extended-define-webpack-plugin')
 
 const preLoaders = [{
         test: /\.js$/,
@@ -27,7 +28,11 @@ const handlers = fs.readdirSync(paths.appFunctions)
     .reduce((finalObject, entry) => Object.assign(finalObject, entry), {})
 
 const plugins = [
-    new webpack.DefinePlugin(settings),
+    new ExtendedDefineWebpackPlugin({
+        process: {
+            env: settings
+        }
+    }),
     new webpack.IgnorePlugin(/\.(css|less)$/),
 ]
 
