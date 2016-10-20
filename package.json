@@ -36,6 +36,7 @@
     "eslint": "^3.7.1",
     "eslint-loader": "^1.5.0",
     "eslint-plugin-import": "^2.0.0",
+    "extended-define-webpack-plugin": "0.1.2",
     "json-loader": "^0.5.4",
     "serverless": "^1.0.2",
     "serverless-offline": "git+https://github.com/TicketSolutionsPtyLtd/serverless-offline.git/#ticketsolutions_master",
